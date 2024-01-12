@@ -1,0 +1,43 @@
+name: Project Build
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+      sonar_organization:
+        required: true
+        type: string
+      sonar_project:
+        required: true
+        type: string
+    secrets:
+      SONAR_TOKEN:
+        required: true
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}/Src
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+
+  analysis:
+    name: Code Analysis
+    uses: ./.github/workflows/sonarcloud.yml
+    with:
+      working_directory: ${{ inputs.working_directory }}
+      sonar_organization: ${{ inputs.sonar_organization }}
+      sonar_project: ${{ inputs.sonar_project }}
+    secrets: inherit
+    needs: build

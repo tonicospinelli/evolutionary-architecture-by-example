@@ -1,6 +1,7 @@
 name: Chapter 2 workflow
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
