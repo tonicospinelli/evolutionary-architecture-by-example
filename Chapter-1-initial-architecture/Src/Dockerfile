@@ -16,6 +16,8 @@ FROM build AS publish
 RUN dotnet publish "Fitnet.csproj" -c Release -o /app/publish
 
 FROM base AS final
+RUN net user /add nonroot
+USER nonroot
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "EvolutionaryArchitecture.Fitnet.dll"]
