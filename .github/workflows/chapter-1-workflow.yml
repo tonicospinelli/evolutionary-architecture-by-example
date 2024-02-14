@@ -53,8 +53,12 @@ jobs:
           dotnet-version: 8.0.x
       - name: Restore dependencies
         run: dotnet restore
-      - name: Test
-        run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
+      - name: Install DotCover
+        run: dotnet tool install --global JetBrains.dotCover.GlobalTool
+      - name: Test with DotCover
+        run: dotnet dotcover test --dcReportType=HTML
+#      - name: Test
+#        run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -65,8 +69,7 @@ jobs:
           args: >
             -Dsonar.organization=tonicospinelli
             -Dsonar.projectKey=tonicospinelli_evolutionary-architecture-by-example_chapter-1
-            -Dsonar.cs.vstest.reportsPaths=TestResults/*.trx
-            -Dsonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml
+            -Dsonar.cs.dotcover.reportsPaths=dotCover.Output.html
             -Dsonar.coverage.exclusions="**Test*.cs"
             -Dsonar.sources=.
             -Dsonar.test.exclusions=*Tests/**
