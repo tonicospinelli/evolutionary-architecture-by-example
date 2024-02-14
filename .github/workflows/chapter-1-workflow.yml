@@ -62,7 +62,7 @@ jobs:
       - name: Install DotNet Coverage
         run: dotnet tool install --global dotnet-coverage
       - name: Test
-        run: dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+        run: dotnet-coverage collect "XPlat Code Coverage" -f xml -o "coverage.xml"
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -76,9 +76,9 @@ jobs:
             -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml
             -Dsonar.sources=.
             -Dsonar.verbose=true
+            -Dsonar.exclusions=*Tests/,coverage.xml
 #            -Dsonar.coverage.exclusions="**Test*.cs"
 #            -Dsonar.test.exclusions=*Tests/**
-#            -Dsonar.exclusions=*Tests/
 #      - name: Upload coverage to Codecov
 #        uses: codecov/codecov-action@v3
 #        with:
