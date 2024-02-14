@@ -1,19 +1,17 @@
 name: 'SonarCloud Code Analysis'
 description: 'Run the static analysis of the code'
+
 inputs:
   working_directory:
     required: true
-    type: string
+    description: 'The working directory where the code is located'
+    default: '.'
   sonar_organization:
     required: true
-    type: string
+    description: 'The organization in SonarCloud'
   sonar_project:
     required: true
-    type: string
-
-secrets:
-  SONAR_TOKEN:
-    required: true
+    description: 'The project in SonarCloud'
 
 outputs:
   random:
@@ -46,19 +44,24 @@ runs:
         restore-keys: ${{ runner.os }}-sonar-scanner
     - name: 'Install SonarCloud scanner'
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+      shell: bash
       run: |
         dotnet tool update dotnet-sonarscanner --tool-path./.sonar/scanner
     - name: Install .Net Coverage tool
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+      shell: bash
       run: |
         dotnet tool install --global dotnet-coverage
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
+      shell: bash
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
+      shell: bash
       run: dotnet restore
-    - name: Build and analyze
+    - name: Code Analysis
+      shell: bash
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |

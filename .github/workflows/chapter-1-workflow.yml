@@ -31,7 +31,12 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
-        
+      - name: 'Code Analysis'
+        uses: ./.github/actions/sonarcloud
+        with:
+          sonar_organization: tonicospinelli
+          sonar_project: tonicospinelli_evolutionary-architecture-by-example_chapter-1
+
   test:
     defaults:
       run:
