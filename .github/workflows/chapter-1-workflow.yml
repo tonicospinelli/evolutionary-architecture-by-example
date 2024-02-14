@@ -58,8 +58,8 @@ jobs:
 #      - name: Test with DotCover
 #        run: dotnet dotcover test --dcReportType=HTML
       - name: Test
-        run: dotnet test --no-build --no-restore --verbosity normal --collect:"XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-#        run: dotnet test --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+#        run: dotnet test --no-build --no-restore --verbosity normal --collect:"XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        run: dotnet test --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 #      - name: Install DotNet Coverage
 #        run: dotnet tool install --global dotnet-coverage
 #      - name: Test
