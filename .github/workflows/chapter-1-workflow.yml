@@ -74,13 +74,13 @@ jobs:
           args: >
             -Dsonar.organization=tonicospinelli
             -Dsonar.projectKey=tonicospinelli_evolutionary-architecture-by-example_chapter-1
-            -Dsonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml"
+            -Dsonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml
+            -Dsonar.cs.vstest.reportsPaths=TestResults/*.trx
             -Dsonar.sources=.
             -Dsonar.verbose=true
             -Dsonar.exclusions="**/TestResults/**"
             -Dsonar.coverage.exclusions="**Test*.cs"
             -Dsonar.test.exclusions=*Tests/**
-            
             -Dsonar.cs.vstest.reportsPaths=TestResults/*.trx
             -Dsonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml
             -Dsonar.coverage.exclusions="**Test*.cs"
