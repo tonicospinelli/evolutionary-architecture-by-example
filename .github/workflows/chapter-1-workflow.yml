@@ -78,13 +78,13 @@ jobs:
             -Dsonar.cs.vstest.reportsPaths=**/TestResults/*.trx
             -Dsonar.sources=.
             -Dsonar.verbose=true
-#            -Dsonar.exclusions="**/TestResults/**"
             -Dsonar.coverage.exclusions="**Test*.cs"
             -Dsonar.test.exclusions=*Tests/**
             -Dsonar.cs.vstest.reportsPaths=TestResults/*.trx
             -Dsonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml
             -Dsonar.coverage.exclusions="**Test*.cs"
 
+#            -Dsonar.exclusions="**/TestResults/**"
 #            -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml
 #      - name: Upload coverage to Codecov
 #        uses: codecov/codecov-action@v3
