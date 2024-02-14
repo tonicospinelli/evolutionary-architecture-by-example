@@ -57,12 +57,12 @@ jobs:
 #        run: dotnet tool install --global JetBrains.dotCover.GlobalTool
 #      - name: Test with DotCover
 #        run: dotnet dotcover test --dcReportType=HTML
-#      - name: Test
-#        run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
-      - name: Install DotNet Coverage
-        run: dotnet tool install --global dotnet-coverage
       - name: Test
-        run: dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+        run: dotnet test --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+#      - name: Install DotNet Coverage
+#        run: dotnet tool install --global dotnet-coverage
+#      - name: Test
+#        run: dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -73,10 +73,11 @@ jobs:
           args: >
             -Dsonar.organization=tonicospinelli
             -Dsonar.projectKey=tonicospinelli_evolutionary-architecture-by-example_chapter-1
-            -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml
+            -Dsonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml"
+            -Dsonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
             -Dsonar.sources=.
             -Dsonar.verbose=true
-            -Dsonar.exclusions=coverage.xml
+            -Dsonar.exclusions="**/TestResults/**"
             -Dsonar.coverage.exclusions="**Test*.cs"
             -Dsonar.test.exclusions=*Tests/**
 #      - name: Upload coverage to Codecov
