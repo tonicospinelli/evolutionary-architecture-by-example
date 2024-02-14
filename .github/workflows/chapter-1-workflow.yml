@@ -74,11 +74,11 @@ jobs:
             -Dsonar.organization=tonicospinelli
             -Dsonar.projectKey=tonicospinelli_evolutionary-architecture-by-example_chapter-1
             -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml
-#            -Dsonar.coverage.exclusions="**Test*.cs"
             -Dsonar.sources=.
+            -Dsonar.verbose=true
+#            -Dsonar.coverage.exclusions="**Test*.cs"
 #            -Dsonar.test.exclusions=*Tests/**
 #            -Dsonar.exclusions=*Tests/
-            -Dsonar.verbose=true
 #      - name: Upload coverage to Codecov
 #        uses: codecov/codecov-action@v3
 #        with:
