@@ -77,7 +77,7 @@ jobs:
             -Dsonar.projectKey=tonicospinelli_evolutionary-architecture-by-example_chapter-1
             -Dsonar.cs.opencover.reportsPaths=**/TestResults/**/coverage.opencover.xml
             -Dsonar.cs.vstest.reportsPaths=**/TestResults/*.trx
-            -Dsonar.sources=.
+            -Dsonar.sources=${{ env.CHAPTER_DIR }}/Src
             -Dsonar.verbose=true
             -Dsonar.coverage.exclusions=**Test*.cs
             -Dsonar.exclusions="**/TestResults/**"
