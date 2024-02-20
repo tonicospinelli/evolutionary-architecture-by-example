@@ -75,4 +75,4 @@ jobs:
             -Dsonar.coverage.exclusions=**Test*.cs
             -Dsonar.exclusions="**/TestResults/**"
       - name: view result
-        run: cat ./${{ env.CHAPTER_DIR }}/Src/Fitnet.UnitTests/TestResults/coverage.opencover.xml
+        run: cat ${{ env.GITHUB_PATH }}/${{ env.CHAPTER_DIR }}/Src/Fitnet.UnitTests/TestResults/coverage.opencover.xml
