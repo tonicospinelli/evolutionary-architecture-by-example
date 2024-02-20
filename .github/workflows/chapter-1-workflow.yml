@@ -5,10 +5,12 @@ on:
   push:
     branches: [ "main" ]
     paths:
+      - '.github/workflows/chapter-1-workflow.yml'
       - 'Chapter-1-initial-architecture/**'
   pull_request:
     branches: [ "main" ]
     paths:
+      - '.github/workflows/chapter-1-workflow.yml'
       - 'Chapter-1-initial-architecture/**'
 
 env:
