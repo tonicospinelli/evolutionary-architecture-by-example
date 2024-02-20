@@ -74,3 +74,5 @@ jobs:
             -Dsonar.verbose=true
             -Dsonar.coverage.exclusions=**Test*.cs
             -Dsonar.exclusions="**/TestResults/**"
+      - name: view result
+        run: cat ./Fitnet.UnitTests/TestResults/coverage.opencover.xml
