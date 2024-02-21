@@ -88,7 +88,7 @@ jobs:
       run:
         working-directory: ${{ env.CHAPTER_DIR }}/Src
     runs-on: ubuntu-latest
-    name: Test
+    name: Test Coverlet
     needs: build
     steps:
       - uses: actions/checkout@v3
