@@ -88,7 +88,7 @@ jobs:
       run:
         working-directory: ${{ env.CHAPTER_DIR }}/Src
     runs-on: ubuntu-latest
-    name: Test Coverlet
+    name: "Test Coverlet"
     needs: build
     steps:
       - uses: actions/checkout@v3
@@ -101,7 +101,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Coverlet Test
-        run: coverlet .\CovExample.Tests\bin\Debug\net8.0\CovExample.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
+        run: dotnet test /p:CollectCoverage=true /p:DeterministicSourcePaths=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage.xml
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
