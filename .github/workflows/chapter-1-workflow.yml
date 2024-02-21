@@ -54,7 +54,11 @@ jobs:
         with:
           dotnet-version: 8.0.x
       - name: Restore dependencies
+        run: dotnet tool install --global coverlet.console
+      - name: Restore dependencies
         run: dotnet restore
+      - name: Coverlet
+        run: coverlet .\CovExample.Tests\bin\Debug\net6.0\CovExample.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
       - name: Test
         run: dotnet test --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
       - name: SonarCloud Scan
@@ -79,5 +83,41 @@ jobs:
           find . -type f -name '*opencover.xml' -exec sed -i 's/\/home.*Src\/Fitnet/Fitnet/g' {} \;
           cat $GITHUB_WORKSPACE/${{ env.CHAPTER_DIR }}/Src/Fitnet.UnitTests/TestResults/*/coverage.opencover.xml
 
-
-        
+  testCoverlet:
+    defaults:
+      run:
+        working-directory: ${{ env.CHAPTER_DIR }}/Src
+    runs-on: ubuntu-latest
+    name: Test
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet tool install --global coverlet.console
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Test
+        run: coverlet .\CovExample.Tests\bin\Debug\net6.0\CovExample.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: ./${{ env.CHAPTER_DIR }}/Src
+          args: >
+            -Dsonar.organization=tonicospinelli
+            -Dsonar.projectKey=tonicospinelli_evolutionary-architecture-by-example_chapter-1
+            -Dsonar.cs.opencover.reportsPaths=**/coverage.xml
+            -Dsonar.sources=.
+            -Dsonar.tests=./Fitnet.ArchitectureTests,./Fitnet.IntegrationTests,./Fitnet.UnitTests
+            -Dsonar.verbose=true
+            -Dsonar.coverage.exclusions=**Test*.cs
+      - name: view result
+        run: |
+          find . -type f -name '*opencover.xml' -exec sed -i 's/\/home.*Src\/Fitnet/Fitnet/g' {} \;
+          cat $GITHUB_WORKSPACE/${{ env.CHAPTER_DIR }}/Src/*/coverage.xml
