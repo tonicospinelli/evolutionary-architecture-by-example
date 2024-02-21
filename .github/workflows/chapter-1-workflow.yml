@@ -75,5 +75,9 @@ jobs:
             -Dsonar.coverage.exclusions=**Test*.cs
             -Dsonar.exclusions="**/TestResults/**"
       - name: view result
-        run: cat $GITHUB_WORKSPACE/${{ env.CHAPTER_DIR }}/Src/Fitnet.UnitTests/TestResults/*/coverage.opencover.xml
+        run: |
+          find . -type f -name '*opencover.xml' -exec sed -i 's/\/home.*Src\/Fitnet/Fitnet/g' {} \;
+          cat $GITHUB_WORKSPACE/${{ env.CHAPTER_DIR }}/Src/Fitnet.UnitTests/TestResults/*/coverage.opencover.xml
+
+
         
