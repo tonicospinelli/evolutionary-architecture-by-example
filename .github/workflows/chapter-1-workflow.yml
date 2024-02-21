@@ -63,13 +63,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectBaseDir: ./${{ env.CHAPTER_DIR }}/Src
           args: >
             -Dsonar.organization=tonicospinelli
             -Dsonar.projectKey=tonicospinelli_evolutionary-architecture-by-example_chapter-1
             -Dsonar.cs.opencover.reportsPaths=**/TestResults/**/coverage.opencover.xml
             -Dsonar.cs.vstest.reportsPaths=**/TestResults/*.trx
-            -Dsonar.sources=./Fitnet
+            -Dsonar.sources=.
             -Dsonar.tests=./Fitnet.ArchitectureTests,./Fitnet.IntegrationTests,./Fitnet.UnitTests
             -Dsonar.verbose=true
             -Dsonar.coverage.exclusions=**Test*.cs
