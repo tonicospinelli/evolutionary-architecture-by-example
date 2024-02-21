@@ -63,6 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
+          projectBaseDir: ./${{ env.CHAPTER_DIR }}/Src
           args: >
             -Dsonar.organization=tonicospinelli
             -Dsonar.projectKey=tonicospinelli_evolutionary-architecture-by-example_chapter-1
